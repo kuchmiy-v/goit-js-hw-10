@@ -11,7 +11,7 @@ import SlimSelect from 'slim-select';
 // змінні з HTML-елементів
 const selectBreed = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
-export const loader = document.querySelector('.loader');
+const loader = document.querySelector('.loader');
 const errorMsg = document.querySelector('.error');
 
 const URL = 'https://api.thecatapi.com/v1/';
