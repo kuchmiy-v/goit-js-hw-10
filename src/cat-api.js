@@ -37,6 +37,8 @@ let slimSelect = new SlimSelect({
   },
 });
 
+errorMsg.style.display = 'none';
+
 // створення розмітки для порід
 function createBreedsMarkup(items) {
   slimSelect.setData(
@@ -50,6 +52,7 @@ function createBreedsMarkup(items) {
 
 // отримання даних про породи
 function fetchBreeds() {
+  loader.style.display = 'block';
   fetch(`${URL}breeds?api_key=${API_KEY}`)
     .then(response => {
       if (!response.ok) {
@@ -60,9 +63,11 @@ function fetchBreeds() {
     .then(data => {
       breeds = data;
       createBreedsMarkup(data);
+      loader.style.display = 'none';
     })
     .catch(error => {
       console.log(error);
+      loader.style.display = 'none';
     });
 }
 
@@ -71,6 +76,7 @@ function fetchCatByBreed(breed) {
   if (!breed) {
     return;
   }
+  loader.style.display = 'block';
   fetch(`${URL}images/search?breed_ids=${breed}`)
     .then(response => {
       if (!response.ok) {
@@ -80,10 +86,12 @@ function fetchCatByBreed(breed) {
     })
     .then(data => {
       catInfo.innerHTML = createCatInfo(data, breed);
+      loader.style.display = 'none';
     })
     .catch(error => {
       Notify.failure("this cat wasn't found :(", 'okay');
       console.log(error);
+      loader.style.display = 'none';
     });
 }
 
@@ -112,7 +120,7 @@ function createCatInfo(catData, id) {
         <p><h3>Temperament:</h3> ${catBreed.temperament}</p>
       </div>
       <div class="cat-image">
-        <img src="${cat.url}" alt="${catBreed.name}">
+        <img src="${cat.url}" alt="${catBreed.name} width="50%" height="50%">
       </div>
     </div>
   `;
